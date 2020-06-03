@@ -259,6 +259,131 @@ def add_small_p(pocket_P, pairs_P):
     #quit()
     return "".join(pocket_p)
 
+def separate_pockets():
+    
+
+    #pockets_all = list("p________________________________________PPPpp______PPPPPP__ppppPPPPP________________pp_____p________PPPPPPP__ppppPPPPPPPPP_____ppPPPPPPPP____________________________PPPP____p_____")
+    #pairs_all = [[17, 23], [16, 24], [15, 25], [14, 26], [13, 27], [11, 30], [10, 31], [9, 32], [5, 36], [4, 37], [3, 38], [2, 39], [1, 40], [0, 41], [46, 51], [45, 52], [44, 53], [43, 54], [42, 55], [74, 79], [73, 80], [72, 81], [71, 82], [69, 84], [68, 85], [67, 86], [93, 100], [92, 101], [65, 102], [64, 103], [63, 104], [62, 105], [61, 106], [60, 107], [59, 108], [58, 109], [57, 110], [56, 111], [117, 128], [116, 129], [115, 130], [114, 131], [113, 132], [112, 133], [148, 153], [147, 154], [146, 156], [145, 157], [144, 158], [143, 160], [142, 161], [141, 162], [140, 163], [139, 164], [138, 165], [137, 166], [136, 167], [125, 171], [124, 172], [123, 173], [122, 174]]
+    db = 	       "......(((((.(((((....)))))..)))))...........(((((.....))))).((((.......))))........((((((((.((..(((.(((.....))).))).)).))))))))......................"
+    pockets_all = list('PPPPPPPPpp___________________PPPPPPPPPPPPPPPPP___________PPPPP___________PPPPPPP___pp________________________________________PPPPPPPP________________')
+    pairs_all = [[16, 21], [15, 22], [14, 23], [13, 24], [12, 25], [10, 28], [9, 29], [8, 30], [7, 31], [6, 32], [48, 54], [47, 55], [46, 56], [45, 57], [44, 58], [63, 71], [62, 72], [61, 73], [60, 74], [102, 108], [101, 109], [100, 110], [98, 112], [97, 113], [96, 114], [93, 116], [92, 117], [90, 119], [89, 120], [88, 121], [87, 122], [86, 123], [85, 124], [84, 125], [83, 126]]
+    sep = pockets_all.copy()
+
+    string_pockets_all = "".join(pockets_all)
+    
+    xstring = string_pockets_all.replace("p","P").replace("_P","_xP").replace("P_","Px_")
+    print(string_pockets_all)
+    print(xstring)
+    xstring_splitted = xstring.split("x")
+    #count =1
+    count = ['1','2','3','4','5','6','7','8','9','0','A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','X','Y','Z',\
+            'a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','x','y','z']
+    number =0
+    for i in range(0, len(xstring_splitted)):
+        if "P" in xstring_splitted[i]:
+            xstring_splitted[i] = xstring_splitted[i].replace("P",count[number])
+            number+=1
+    pockets_numbered = "".join(xstring_splitted)
+    pockets_numbered_list = list(pockets_numbered)
+        
+    print("".join(pockets_all))
+    print(pockets_numbered) 
+    print(db)
+    
+    '''
+    for k in range(0, len(count)):
+        for i in range(0, len(pockets_numbered_list)):
+        #print(number,'number')
+            if pockets_numbered_list[i] == count[number]:
+                print(count[number])            
+    
+    for i in range(0, len(count)):
+        for k in range(0, len(pockets_numbered_list)):
+            if pockets_numbered_list[k] == count[i]:
+                print(count[i])
+                for l in range(0, len(pairs_all)):
+                    #print(pockets_numbered_list[l], 'inside')
+                    if (pockets_all[k] == "P") or (pockets_all[k] == "p"):# == pairs_all[l][0]:
+                        #print(pockets_numbered_list[l], 'inside')
+                        print(pairs_all[l])
+    '''
+    list_of_pairs_fragments = [[] for i in range(0,len(count))]
+    print(list_of_pairs_fragments)
+    for x in range(0,len(count)):
+        print(x)
+        pair_x = list_of_pairs_fragments[x]
+        for i in range(0, len(pockets_numbered_list)):
+            if pockets_numbered_list[i] == str(count[x]):
+                for k in range(0,len(pairs_all)):
+                    if (pairs_all[k][0] == i) or (pairs_all[k][1] == i):
+                        print(pairs_all[k])
+                        pair_x.append(pairs_all[k])
+    print(list_of_pairs_fragments)
+    pockets = []
+    for i in range(0,len(list_of_pairs_fragments)-1):
+        pockets.append([])
+        for k in range(1,len(list_of_pairs_fragments)):
+            is_common = common_data(list_of_pairs_fragments[i], list_of_pairs_fragments[k])
+            if is_common == True:
+                pockets[i].append(str(k))
+        #print(common_data(list_of_pairs_fragments[i], list_of_pairs_fragments[i+1]))
+        
+        
+    print(pockets)
+    pockets = [x for x in pockets if x != []]
+    print(pockets)
+    
+    whole = []
+    for i in range(0, len(pockets)-1):
+        
+        for k in range(1,len(pockets)):
+            is_common = common_data(pockets[i], pockets[k])
+            if is_common ==True:
+                whole.append(sorted(uniq_pairs(pockets[i]+pockets[k])))
+    print(uniq_pairs(whole), 'whole')
+    
+    
+            
+    '''
+    pair_2 = []
+    for i in range(0, len(pockets_numbered_list)):
+        if pockets_numbered_list[i] == str(2):
+            for k in range(0,len(pairs_all)):
+                if (pairs_all[k][0] == i) or (pairs_all[k][1] == i):
+                    print(pairs_all[k])
+                    pair_2.append(pairs_all[k])
+    print(pair_1)
+    print(pair_2)
+    '''
+    #print(common_data(pair_1,pair_2))
+    
+    '''
+    for i in range(0, len(pocket_P)):
+        if pocket_P[i] == "P":
+             for k in range(0, len(pairs_P)):
+                if (pairs_P[k][0] == i) and (pocket_P[pairs_P[k][1]] == "_"):
+                    pocket_p[pairs_P[k][1]] = "p"
+                elif (pairs_P[k][1] == i) and (pocket_P[pairs_P[k][0]] == "_"):
+                    pocket_p[pairs_P[k][0]] = "p"
+    '''
+    
+    
+def common_data(list1, list2): 
+    result = False
+  
+    # traverse in the 1st list 
+    for x in list1: 
+  
+        # traverse in the 2nd list 
+        for y in list2: 
+    
+            # if one common 
+            if x == y: 
+                result = True
+                return result  
+                  
+    return result 
+
     
 def main_function():
     if args.input is None:
@@ -313,6 +438,9 @@ def main_function():
         all_pockets[pkey].append(Pp)
     
     print(all_pockets)
+    
+    
+    separate_pockets()
     quit()
     
     
