@@ -121,23 +121,16 @@ def check_pocket_pairs(pockets, open_bracket, close_bracket):
 
 def pairs_for_long_P(pocket, ss_list):
     
-#    ss = "((...))..."
-#    ss_list = [[0,6], [1,5]]
-#    pocket = "P........."
     pair_list = []
     for i in range(0,len(pocket)):
         if pocket[i] == "P":
-            #print("kupka")
             for k in range(0,len(ss_list)):
-                if (ss_list[i][0] == i): # or (ss_list[i][1] == i):
-                    pair_list.append(ss_list[i])
-                elif ss_list[i][1] == i:
-                    pair_list.append(ss_list[i])
-    print(pair_list)
+                if (ss_list[k][0] == i): 
+                    pair_list.append(ss_list[k])
+                elif ss_list[k][1] == i:
+                    pair_list.append(ss_list[k])
     uniq_pair_list = uniq_pairs(pair_list)
-#    temp_set = set(pair_list)
-#    pair_list = list(temp)
-    print(uniq_pair_list)
+    
     return uniq_pair_list
 
 
@@ -178,16 +171,15 @@ def bracket_to_pair(ss):
     #print(stack_list)
     return pairs_list
 
+
 def remove_short_P(string):
     
-    #print(string,len(string))
     string = "x"+string+"x"
     string = string.replace("P_","Px_").replace("_P","_xP")
     string = string.replace("xPx","_").replace("xPPx","__").replace("xPPPx","___").replace("xPPPPx","____").replace("xPPPPPx","_____")
     string = string.replace("x","")
-    #print(string,len(string),"\n")
-    #replace("P_","Px_")..replace("_PPP_","_____").replace("_PPPP_","______").replace("_PPPPP_","_______").replace("")
     return string
+
 
 def main_function():
     if args.input is None:
