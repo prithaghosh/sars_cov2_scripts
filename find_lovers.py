@@ -180,7 +180,51 @@ def remove_short_P(string):
     string = string.replace("x","")
     return string
 
+def get_partners_for_long_P():
+    
+    long_P = list("____________________________________________________PPPPPP___________________________________________PPPPPPP______PPPPPPPPP_______PPPPPPPP__________________________________________")
+    all_P  = list("_________________________________________PPP________PPPPPP______PPPPP_________________PPPPP______PPP_PPPPPPP______PPPPPPPPP_______PPPPPPPP____________________________PPPP__________")
+    pairs_long_P = [[45, 52], [44, 53], [43, 54], [42, 55], [56, 111], [57, 110], [92, 101], [65, 102], [64, 103], [63, 104], [62, 105], [61, 106], [60, 107], [114, 131], [115, 130], [116, 129], [117, 128], [122, 174], [113, 132], [112, 133], [136, 167], [137, 166]]
+    #part_added_P = list("_"*len(all_P))
+    part_added_P = long_P.copy()
+    print(len(pairs_long_P))
+    print("".join(long_P).count("P"))
+    print("".join(part_added_P), "part_added")
+    print("".join(all_P),"all P")
+    print("".join(long_P),"long P")
+    
+    for i in range(0, len(all_P)):
+        if all_P[i] == "P":
+            for k in range(0, len(pairs_long_P)):
+                if (pairs_long_P[k][0] == i):
+                    part_added_P[i] = "P"
+                elif (pairs_long_P[k][1] == i):
+                    part_added_P[i] = "P"  
+    
+            #print("kupka")
+            
+    print("".join(part_added_P), "part added")        
+            
+    added_P = part_added_P.copy()
+    for i in range(0, len(part_added_P)):
+        if (part_added_P[i] == "P") and (long_P[i] == "_"):
+            position = i
+            #print(i)
+            while all_P[position] == "P":
+                #print(position, "pos")
+                added_P[position] = "P"
+                position -= 1    
+            position = i
+            while all_P[position] == "P":
+                #print(position, "pos")
+                added_P[position] = "P"
+                position += 1   
+                
+    print("".join(part_added_P), "part added")
+    print("".join(part_added_P).count("P"))
+    print("".join(added_P), "added_P")
 
+    
 def main_function():
     if args.input is None:
         raise FileNotFoundError("Please provide input file with '--input' "
@@ -203,15 +247,16 @@ def main_function():
     #quit()
     for pkey, item_list in all_pockets.items():
         pocket_P = item_list[3]
-        print('\n\n',pkey,item_list,'\n')
-        print(item_list[1])
-        print(pocket_P)
+#        print('\n\n',pkey,item_list,'\n')
+#        print(item_list[1])
+#        print(pocket_P)
         pairs_all = item_list[2]
-        print(pairs_all,'\n')
+#        print(pairs_all,'\n')
         pairs_P = pairs_for_long_P(pocket_P, pairs_all)
         all_pockets[pkey].append(pairs_P)
     print(all_pockets)    
     
+    get_partners_for_long_P()
     
     quit()
     
