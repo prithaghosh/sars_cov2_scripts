@@ -119,24 +119,38 @@ def check_pocket_pairs(pockets, open_bracket, close_bracket):
         corrected_pockets[pkey] = new_string
     return corrected_pockets
 
-def pairs_for_long_P():
+def pairs_for_long_P(pocket, ss_list):
     
-    ss = "((...))..."
-    ss_list = [[0,6], [1,5]]
-    pocket = "P........."
+#    ss = "((...))..."
+#    ss_list = [[0,6], [1,5]]
+#    pocket = "P........."
     pair_list = []
     for i in range(0,len(pocket)):
         if pocket[i] == "P":
-            print("kupka")
+            #print("kupka")
             for k in range(0,len(ss_list)):
-                if (ss_list[i][0] == i) or (ss_list[i][1] == i):
+                if (ss_list[i][0] == i): # or (ss_list[i][1] == i):
+                    pair_list.append(ss_list[i])
+                elif ss_list[i][1] == i:
                     pair_list.append(ss_list[i])
     print(pair_list)
-    temp_set = set(pair_list)
-    pair_list = list(temp)
-    print(pair_list)
+    uniq_pair_list = uniq_pairs(pair_list)
+#    temp_set = set(pair_list)
+#    pair_list = list(temp)
+    print(uniq_pair_list)
+    return uniq_pair_list
 
 
+def uniq_pairs(pairs): 
+  
+    uniq = [] 
+      
+    for x in pairs: 
+        if x not in uniq: 
+            uniq.append(x) 
+    return uniq
+    
+    
 def bracket_to_pair(ss):
 
     #ss = "(((((((((........((.((((.[..)))).)).(((.].))).....)))))))))...................((((.(((((((....))))))).))))"
@@ -161,32 +175,56 @@ def bracket_to_pair(ss):
             err = stack_list[i].pop()
             raise IndexError("There is no closing bracket for nt position "+str(err)+'-'+ss[err])
 #    print pairs_list, ' p_list'
-    print(stack_list)
+    #print(stack_list)
     return pairs_list
 
-
-
+def remove_short_P(string):
+    
+    #print(string,len(string))
+    string = "x"+string+"x"
+    string = string.replace("P_","Px_").replace("_P","_xP")
+    string = string.replace("xPx","_").replace("xPPx","__").replace("xPPPx","___").replace("xPPPPx","____").replace("xPPPPPx","_____")
+    string = string.replace("x","")
+    #print(string,len(string),"\n")
+    #replace("P_","Px_")..replace("_PPP_","_____").replace("_PPPP_","______").replace("_PPPPP_","_______").replace("")
+    return string
 
 def main_function():
     if args.input is None:
         raise FileNotFoundError("Please provide input file with '--input' "
                                 "argument. Use -h for more help.")
     all_pockets = get_fragments(args.input)
-    print(all_pockets)
+    #print(all_pockets)
 
     for pkey, item_list in all_pockets.items():
         pairs = bracket_to_pair(item_list[0])
         all_pockets[pkey].append(pairs)
-    print(all_pockets)
+    #print(all_pockets)
 
     for pkey, item_list in all_pockets.items():
         capital_P = item_list[1]
-        remove_short_P = capital_P.replace("_PPP_","_____").replace("_PPPP_","______").replace("_PPPPP_","_______")
-        all_pockets[pkey].append(remove_short_P)
-    print(all_pockets)
+        short_P_removed = remove_short_P(capital_P)
+        #print(short_P_removed)
+        #quit()	
+        all_pockets[pkey].append(short_P_removed)
+    #print(all_pockets)
+    #quit()
+    for pkey, item_list in all_pockets.items():
+        pocket_P = item_list[3]
+        print('\n\n',pkey,item_list,'\n')
+        print(item_list[1])
+        print(pocket_P)
+        pairs_all = item_list[2]
+        print(pairs_all,'\n')
+        pairs_P = pairs_for_long_P(pocket_P, pairs_all)
+        all_pockets[pkey].append(pairs_P)
+    print(all_pockets)    
     
-    pairs_for_long_P()    
+    
     quit()
+    
+    
+    
     all_pockets = {x: [all_pockets[x][0], new_pockets[x]] for x in
                    all_pockets.keys()}
     new_pockets = check_pocket_pairs(all_pockets, "[", "]")
