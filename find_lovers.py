@@ -180,11 +180,11 @@ def remove_short_P(string):
     string = string.replace("x","")
     return string
 
-def get_partners_for_long_P():
+def get_partners_for_long_P(long_P, all_P, pairs_long_P):
     
-    long_P = list("____________________________________________________PPPPPP___________________________________________PPPPPPP______PPPPPPPPP_______PPPPPPPP__________________________________________")
-    all_P  = list("_________________________________________PPP________PPPPPP______PPPPP_________________PPPPP______PPP_PPPPPPP______PPPPPPPPP_______PPPPPPPP____________________________PPPP__________")
-    pairs_long_P = [[45, 52], [44, 53], [43, 54], [42, 55], [56, 111], [57, 110], [92, 101], [65, 102], [64, 103], [63, 104], [62, 105], [61, 106], [60, 107], [114, 131], [115, 130], [116, 129], [117, 128], [122, 174], [113, 132], [112, 133], [136, 167], [137, 166]]
+    #long_P = list("____________________________________________________PPPPPP___________________________________________PPPPPPP______PPPPPPPPP_______PPPPPPPP__________________________________________")
+    #all_P  = list("_________________________________________PPP________PPPPPP______PPPPP_________________PPPPP______PPP_PPPPPPP______PPPPPPPPP_______PPPPPPPP____________________________PPPP__________")
+    #pairs_long_P = [[45, 52], [44, 53], [43, 54], [42, 55], [56, 111], [57, 110], [92, 101], [65, 102], [64, 103], [63, 104], [62, 105], [61, 106], [60, 107], [114, 131], [115, 130], [116, 129], [117, 128], [122, 174], [113, 132], [112, 133], [136, 167], [137, 166]]
     #part_added_P = list("_"*len(all_P))
     part_added_P = long_P.copy()
     print(len(pairs_long_P))
@@ -210,20 +210,32 @@ def get_partners_for_long_P():
         if (part_added_P[i] == "P") and (long_P[i] == "_"):
             position = i
             #print(i)
-            while all_P[position] == "P":
+            #print(position, len(all_P))
+            try:
+                while (all_P[position] == "P"): # and (all_P[position] == True):
                 #print(position, "pos")
-                added_P[position] = "P"
-                position -= 1    
+                    added_P[position] = "P"
+                    if position > 0:
+                        position -= 1
+                    else:
+                        break    
+            except:
+                pass
             position = i
-            while all_P[position] == "P":
+            try:
+                while (all_P[position] == "P"): # and (all_P[position] == True):
                 #print(position, "pos")
-                added_P[position] = "P"
-                position += 1   
+                    added_P[position] = "P"
+                #print(position,'inside')
+                    position += 1
+            except:
+                pass
                 
     print("".join(part_added_P), "part added")
     print("".join(part_added_P).count("P"))
     print("".join(added_P), "added_P")
-
+    final = "".join(added_P)
+    return final
     
 def main_function():
     if args.input is None:
@@ -256,7 +268,16 @@ def main_function():
         all_pockets[pkey].append(pairs_P)
     print(all_pockets)    
     
-    get_partners_for_long_P()
+    for pkey, item_list in all_pockets.items():
+        print(pkey)
+        long_P = list(item_list[3])
+        all_P = list(item_list[1])
+        pairs_long_P = item_list[4]
+        elongated_short_P = get_partners_for_long_P(long_P, all_P, pairs_long_P) # long_P, all_P, pairs_long_P
+        all_pockets[pkey].append(elongated_short_P)
+    
+    #print(all_pockets)
+    
     
     quit()
     
