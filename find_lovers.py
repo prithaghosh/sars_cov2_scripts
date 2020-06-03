@@ -51,7 +51,7 @@ def get_fragments(ss_pockets):
         for line in file:
             segment = line.strip()
             ss = next(file).strip()
-            pocket = next(file).strip()
+            pocket = next(file).strip().replace("P_","PP").replace("_P","PP") # adding onP before and one P after
             my_dict[segment] = [ss, pocket]
         return my_dict
 
@@ -119,13 +119,74 @@ def check_pocket_pairs(pockets, open_bracket, close_bracket):
         corrected_pockets[pkey] = new_string
     return corrected_pockets
 
+def pairs_for_long_P():
+    
+    ss = "((...))..."
+    ss_list = [[0,6], [1,5]]
+    pocket = "P........."
+    pair_list = []
+    for i in range(0,len(pocket)):
+        if pocket[i] == "P":
+            print("kupka")
+            for k in range(0,len(ss_list)):
+                if (ss_list[i][0] == i) or (ss_list[i][1] == i):
+                    pair_list.append(ss_list[i])
+    print(pair_list)
+    temp_set = set(pair_list)
+    pair_list = list(temp)
+    print(pair_list)
+
+
+def bracket_to_pair(ss):
+
+    #ss = "(((((((((........((.((((.[..)))).)).(((.].))).....)))))))))...................((((.(((((((....))))))).))))"
+
+    db_list = [['(',')'],['[',']']]
+
+    stack_list = []
+    pairs_list = []
+
+    # stack-pop for all versions of brackets form the db_list    
+    for i in range(0, len(db_list)):
+        for c, s in enumerate(ss):
+            if s == db_list[i][0]:
+                stack_list.append(c)
+            elif s == db_list[i][1]:
+                if len(stack_list) == 0:
+                    raise IndexError("There is no opening bracket for nt position "+str(c+1)+'-'+ss[c])
+                elif s == db_list[i][1]:
+                    pairs_list.append([stack_list.pop(), c])
+
+        if len(stack_list) > 0:
+            err = stack_list[i].pop()
+            raise IndexError("There is no closing bracket for nt position "+str(err)+'-'+ss[err])
+#    print pairs_list, ' p_list'
+    print(stack_list)
+    return pairs_list
+
+
+
 
 def main_function():
     if args.input is None:
         raise FileNotFoundError("Please provide input file with '--input' "
                                 "argument. Use -h for more help.")
     all_pockets = get_fragments(args.input)
-    new_pockets = check_pocket_pairs(all_pockets, "(", ")")
+    print(all_pockets)
+
+    for pkey, item_list in all_pockets.items():
+        pairs = bracket_to_pair(item_list[0])
+        all_pockets[pkey].append(pairs)
+    print(all_pockets)
+
+    for pkey, item_list in all_pockets.items():
+        capital_P = item_list[1]
+        remove_short_P = capital_P.replace("_PPP_","_____").replace("_PPPP_","______").replace("_PPPPP_","_______")
+        all_pockets[pkey].append(remove_short_P)
+    print(all_pockets)
+    
+    pairs_for_long_P()    
+    quit()
     all_pockets = {x: [all_pockets[x][0], new_pockets[x]] for x in
                    all_pockets.keys()}
     new_pockets = check_pocket_pairs(all_pockets, "[", "]")
