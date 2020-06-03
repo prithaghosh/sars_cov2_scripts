@@ -236,6 +236,29 @@ def get_partners_for_long_P(long_P, all_P, pairs_long_P):
     print("".join(added_P), "added_P")
     final = "".join(added_P)
     return final
+
+
+def add_small_p(pocket_P, pairs_P):
+    
+    #pocket_P = list("_________________________________________PPP________PPPPPP______PPPPP________________________________PPPPPPP______PPPPPPPPP_______PPPPPPPP____________________________PPPP__________")
+    pocket_p = pocket_P.copy()
+    #pairs_P = [[0, 41], [42, 55], [43, 54], [45, 52], [44, 53], [56, 111], [57, 110], [64, 103], [65, 102], [67, 86], [68, 85], [92, 101], [63, 104], [62, 105], [61, 106], [60, 107], [114, 131], [115, 130], [116, 129], [117, 128], [122, 174], [113, 132], [112, 133], [136, 167], [137, 166]]
+    #db = "((((((...(((.(((((.....)))))..)))...))))))(((((....)))))((((((((((.(((.((((....)))).))).....((......))))))))))))((((((....[[[[..))))))..(((((((((((((....)).))).))))))))...]]]]....." 
+    
+    for i in range(0, len(pocket_P)):
+        if pocket_P[i] == "P":
+             for k in range(0, len(pairs_P)):
+                if (pairs_P[k][0] == i) and (pocket_P[pairs_P[k][1]] == "_"):
+                    pocket_p[pairs_P[k][1]] = "p"
+                elif (pairs_P[k][1] == i) and (pocket_P[pairs_P[k][0]] == "_"):
+                    pocket_p[pairs_P[k][0]] = "p"
+    print("\n")
+    #print(db)
+    #print("".join(pocket_P))
+    #print("".join(pocket_p))
+    #quit()
+    return "".join(pocket_p)
+
     
 def main_function():
     if args.input is None:
@@ -275,10 +298,21 @@ def main_function():
         pairs_long_P = item_list[4]
         elongated_short_P = get_partners_for_long_P(long_P, all_P, pairs_long_P) # long_P, all_P, pairs_long_P
         all_pockets[pkey].append(elongated_short_P)
+
+    for pkey, item_list in all_pockets.items():
+        elongated_short_P = item_list[5]
+        pairs_all = item_list[2]
+        pairs_elongated_P = pairs_for_long_P(elongated_short_P, pairs_all)
+        all_pockets[pkey].append(pairs_elongated_P)
+        
+    print(all_pockets)
+    for pkey, item_list in all_pockets.items():
+        pocket_P = list(item_list[5])
+        pairs_P = item_list[6]
+        Pp = add_small_p(pocket_P, pairs_P)
+        all_pockets[pkey].append(Pp)
     
-    #print(all_pockets)
-    
-    
+    print(all_pockets)
     quit()
     
     
