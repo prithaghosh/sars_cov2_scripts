@@ -51,8 +51,9 @@ def get_fragments(ss_pockets):
         for line in file:
             segment = line.strip()
             ss = next(file).strip()
-            pocket = next(file).strip().replace("P_","PP").replace("_P","PP") # adding onP before and one P after
-            my_dict[segment] = [ss, pocket]
+            pocket = next(file).strip()# .replace("P_","PP").replace("_P","PP") # adding onP before and one P after
+            pocket_ext = pocket.replace("P_","PP").replace("_P","PP")
+            my_dict[segment] = [ss, pocket, pocket_ext]
         return my_dict
 
 
@@ -176,7 +177,7 @@ def remove_short_P(string):
     
     string = "x"+string+"x"
     string = string.replace("P_","Px_").replace("_P","_xP")
-    string = string.replace("xPx","_").replace("xPPx","__").replace("xPPPx","___").replace("xPPPPx","____").replace("xPPPPPx","_____")
+    string = string.replace("xPx","_").replace("xPPx","__").replace("xPPPx","___").replace("xPPPPx","____")#.replace("xPPPPPx","_____") now 5P will be included
     string = string.replace("x","")
     return string
 
@@ -413,15 +414,16 @@ def main_function():
         raise FileNotFoundError("Please provide input file with '--input' "
                                 "argument. Use -h for more help.")
     all_pockets = get_fragments(args.input)
-    #print(all_pockets)
+    print(all_pockets)
 
+#    quit()
     for pkey, item_list in all_pockets.items():
         pairs = bracket_to_pair(item_list[0])
         all_pockets[pkey].append(pairs)
     #print(all_pockets)
 
     for pkey, item_list in all_pockets.items():
-        capital_P = item_list[1]
+        capital_P = item_list[2]
         short_P_removed = remove_short_P(capital_P)
         #print(short_P_removed)
         #quit()	
@@ -429,11 +431,11 @@ def main_function():
     #print(all_pockets)
     #quit()
     for pkey, item_list in all_pockets.items():
-        pocket_P = item_list[3]
+        pocket_P = item_list[4]
 #        print('\n\n',pkey,item_list,'\n')
 #        print(item_list[1])
 #        print(pocket_P)
-        pairs_all = item_list[2]
+        pairs_all = item_list[3]
 #        print(pairs_all,'\n')
         pairs_P = pairs_for_long_P(pocket_P, pairs_all)
         all_pockets[pkey].append(pairs_P)
@@ -441,29 +443,29 @@ def main_function():
     
     for pkey, item_list in all_pockets.items():
         print(pkey)
-        long_P = list(item_list[3])
-        all_P = list(item_list[1])
-        pairs_long_P = item_list[4]
+        long_P = list(item_list[4])
+        all_P = list(item_list[2])
+        pairs_long_P = item_list[5]
         elongated_short_P = get_partners_for_long_P(long_P, all_P, pairs_long_P) # long_P, all_P, pairs_long_P
         all_pockets[pkey].append(elongated_short_P)
 
     for pkey, item_list in all_pockets.items():
-        elongated_short_P = item_list[5]
-        pairs_all = item_list[2]
+        elongated_short_P = item_list[6]
+        pairs_all = item_list[3]
         pairs_elongated_P = pairs_for_long_P(elongated_short_P, pairs_all)
         all_pockets[pkey].append(pairs_elongated_P)
         
     print(all_pockets)
     for pkey, item_list in all_pockets.items():
-        pocket_P = list(item_list[5])
-        pairs_P = item_list[6]
+        pocket_P = list(item_list[6])
+        pairs_P = item_list[7]
         Pp = add_small_p(pocket_P, pairs_P)
         all_pockets[pkey].append(Pp)
     
     print(all_pockets)
     for pkey, item_list in all_pockets.items():
-        pockets_all= list(item_list[7])
-        pairs_all = item_list[2]
+        pockets_all= list(item_list[8])
+        pairs_all = item_list[3]
         pockets_separated = separate_pockets(pockets_all, pairs_all)
         all_pockets[pkey].append(pockets_separated)
     
@@ -475,8 +477,9 @@ def main_function():
         for key in all_pockets:
             print(key, file=f)
             print(all_pockets[key][0], file=f)
-            print(all_pockets[key][7], file=f)
-            print("\n".join(all_pockets[key][8]), file=f)
+            print(all_pockets[key][1], file=f)
+            print(all_pockets[key][8], file=f)
+            print("\n".join(all_pockets[key][9]), file=f)
     quit()
     
     
