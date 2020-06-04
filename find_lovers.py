@@ -480,20 +480,32 @@ def main_function():
             print(all_pockets[key][1], file=f)
             print(all_pockets[key][8], file=f)
             print("\n".join(all_pockets[key][9]), file=f)
-    quit()
-    
-    
-    
-    all_pockets = {x: [all_pockets[x][0], new_pockets[x]] for x in
-                   all_pockets.keys()}
-    new_pockets = check_pocket_pairs(all_pockets, "[", "]")
-
-    with open(args.output, "w") as f:
-        for key in all_pockets:
-            print(key, file=f)
-            print(all_pockets[key][0], file=f)
-            print(new_pockets[key], file=f)
 
 
 if __name__ == "__main__":
     main_function()
+
+
+
+##############################################################
+'''
+all_pockets dictionary format: 
+
+key: name of fragment
+
+item_list[0] - sec struct dot bracket
+item_list[1] - Pritha annotation P (pockets derived from analysis of pdbs)
+item_list[2] - P+-1
+item_list[3] - sec struct as a list of pairs derived from dot-bracket for whoe structure
+item_list[4] - P annotation for streches of P =< 6 (or 5)
+item_list[5] - list of pairs for residues fro P streches longer-equal than 6 (or 5)
+item_list[6] - P annotation with added small p which are the base pair partners for capital P
+item_list[7] - list of pairs for P and p annotated (from item_list[6])
+item_list[8] - strecht of P extended by the residues initially in the strech (from item_list[2])
+item_list[9] - list of separated pockets
+
+
+
+
+
+'''
