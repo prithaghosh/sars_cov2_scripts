@@ -177,7 +177,7 @@ def remove_short_P(string):
     
     string = "x"+string+"x"
     string = string.replace("P_","Px_").replace("_P","_xP")
-    string = string.replace("xPx","_").replace("xPPx","__").replace("xPPPx","___").replace("xPPPPx","____")#.replace("xPPPPPx","_____") now 5P will be included
+    string = string.replace("xPx","_").replace("xPPx","__").replace("xPPPx","___").replace("xPPPPx","____").replace("xPPPPPx","_____") # now 5P will be included
     string = string.replace("x","")
     return string
 
@@ -188,11 +188,11 @@ def get_partners_for_long_P(long_P, all_P, pairs_long_P):
     #pairs_long_P = [[45, 52], [44, 53], [43, 54], [42, 55], [56, 111], [57, 110], [92, 101], [65, 102], [64, 103], [63, 104], [62, 105], [61, 106], [60, 107], [114, 131], [115, 130], [116, 129], [117, 128], [122, 174], [113, 132], [112, 133], [136, 167], [137, 166]]
     #part_added_P = list("_"*len(all_P))
     part_added_P = long_P.copy()
-    print(len(pairs_long_P))
-    print("".join(long_P).count("P"))
-    print("".join(part_added_P), "part_added")
-    print("".join(all_P),"all P")
-    print("".join(long_P),"long P")
+   #print(len(pairs_long_P))
+   #print("".join(long_P).count("P"))
+   #print("".join(part_added_P), "part_added")
+   #print("".join(all_P),"all P")
+   #print("".join(long_P),"long P")
     
     for i in range(0, len(all_P)):
         if all_P[i] == "P":
@@ -204,7 +204,7 @@ def get_partners_for_long_P(long_P, all_P, pairs_long_P):
     
             #print("kupka")
             
-    print("".join(part_added_P), "part added")        
+   #print("".join(part_added_P), "part added")        
             
     added_P = part_added_P.copy()
     for i in range(0, len(part_added_P)):
@@ -232,9 +232,9 @@ def get_partners_for_long_P(long_P, all_P, pairs_long_P):
             except:
                 pass
                 
-    print("".join(part_added_P), "part added")
-    print("".join(part_added_P).count("P"))
-    print("".join(added_P), "added_P")
+   #print("".join(part_added_P), "part added")
+   #print("".join(part_added_P).count("P"))
+   #print("".join(added_P), "added_P")
     final = "".join(added_P)
     return final
 
@@ -253,7 +253,7 @@ def add_small_p(pocket_P, pairs_P):
                     pocket_p[pairs_P[k][1]] = "p"
                 elif (pairs_P[k][1] == i) and (pocket_P[pairs_P[k][0]] == "_"):
                     pocket_p[pairs_P[k][0]] = "p"
-    print("\n")
+   #print("\n")
     #print(db)
     #print("".join(pocket_P))
     #print("".join(pocket_p))
@@ -263,22 +263,13 @@ def add_small_p(pocket_P, pairs_P):
 def separate_pockets(pockets_all, pairs_all):
     
 
-    #pockets_all = list("p________________________________________PPPpp______PPPPPP__ppppPPPPP________________pp_____p________PPPPPPP__ppppPPPPPPPPP_____ppPPPPPPPP____________________________PPPP____p_____")
-    #pairs_all = [[17, 23], [16, 24], [15, 25], [14, 26], [13, 27], [11, 30], [10, 31], [9, 32], [5, 36], [4, 37], [3, 38], [2, 39], [1, 40], [0, 41], [46, 51], [45, 52], [44, 53], [43, 54], [42, 55], [74, 79], [73, 80], [72, 81], [71, 82], [69, 84], [68, 85], [67, 86], [93, 100], [92, 101], [65, 102], [64, 103], [63, 104], [62, 105], [61, 106], [60, 107], [59, 108], [58, 109], [57, 110], [56, 111], [117, 128], [116, 129], [115, 130], [114, 131], [113, 132], [112, 133], [148, 153], [147, 154], [146, 156], [145, 157], [144, 158], [143, 160], [142, 161], [141, 162], [140, 163], [139, 164], [138, 165], [137, 166], [136, 167], [125, 171], [124, 172], [123, 173], [122, 174]]
-#    db = 	       "......(((((.(((((....)))))..)))))...........(((((.....))))).((((.......))))........((((((((.((..(((.(((.....))).))).)).))))))))......................"
-#    pockets_all = list('PPPPPPPPpp___________________PPPPPPPPPPPPPPPPP___________PPPPP___________PPPPPPP___pp________________________________________PPPPPPPP________________')
-#    pairs_all = [[16, 21], [15, 22], [14, 23], [13, 24], [12, 25], [10, 28], [9, 29], [8, 30], [7, 31], [6, 32], [48, 54], [47, 55], [46, 56], [45, 57], [44, 58], [63, 71], [62, 72], [61, 73], [60, 74], [102, 108], [101, 109], [100, 110], [98, 112], [97, 113], [96, 114], [93, 116], [92, 117], [90, 119], [89, 120], [88, 121], [87, 122], [86, 123], [85, 124], [84, 125], [83, 126]]
-    #db = '((((((.((((..(((((...(((.(((((((((((..((((((.(((((......)))))..))))))......)))(((((((...........)))))))(((....)))))))))))))).))))).))))....))))))......(((((((...........((((((...))))))....)))))).)...(((((.((((((.((.(((.....)))..))...)))))).)))))' 
-    #pockets_all = list("PP__________________________ppPPPPPPP_p_____________________________PPPPPP_ppp___________________________________PPPPP_________________________pPPPPPPPPP__ppPPPPP_______________________PPPPPP__p_p_________________________________________________")
-    #pairs_all = [[49, 56], [48, 57], [47, 58], [46, 59], [45, 60], [43, 63], [42, 64], [41, 65], [40, 66], [39, 67], [38, 68], [35, 75], [34, 76], [33, 77], [84, 96], [83, 97], [82, 98], [81, 99], [80, 100], [79, 101], [78, 102], [105, 110], [104, 111], [103, 112], [32, 113], [31, 114], [30, 115], [29, 116], [28, 117], [27, 118], [26, 119], [25, 120], [23, 121], [22, 122], [21, 123], [17, 125], [16, 126], [15, 127], [14, 128], [13, 129], [10, 131], [9, 132], [8, 133], [7, 134], [5, 139], [4, 140], [3, 141], [2, 142], [1, 143], [0, 144], [174, 178], [173, 179], [172, 180], [171, 181], [170, 182], [169, 183], [157, 188], [156, 189], [155, 190], [154, 191], [153, 192], [152, 193], [151, 195], [217, 223], [216, 224], [215, 225], [213, 228], [212, 229], [210, 233], [209, 234], [208, 235], [207, 236], [206, 237], [205, 238], [203, 240], [202, 241], [201, 242], [200, 243], [199, 244]]
-    
     sep = pockets_all.copy()
 
     string_pockets_all = "".join(pockets_all)
     
     xstring = string_pockets_all.replace("p","P").replace("_P","_xP").replace("P_","Px_")
     print(string_pockets_all)
-    print(xstring)
+   #print(xstring)
     xstring_splitted = xstring.split("x")
     #count =1
     count = ['1','2','3','4','5','6','7','8','9','0','A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','X','Y','Z',\
@@ -291,8 +282,8 @@ def separate_pockets(pockets_all, pairs_all):
     pockets_numbered = "".join(xstring_splitted)
     pockets_numbered_list = list(pockets_numbered)
         
-    print("".join(pockets_all))
-    print(pockets_numbered) 
+   #print("".join(pockets_all))
+   #print(pockets_numbered) 
     #print(db)
     
     '''
@@ -313,17 +304,17 @@ def separate_pockets(pockets_all, pairs_all):
                         print(pairs_all[l])
     '''
     list_of_pairs_fragments = [[] for i in range(0,len(count))]
-    print(list_of_pairs_fragments)
+   #print(list_of_pairs_fragments)
     for x in range(0,len(count)):
-        print(x)
+       #print(x)
         pair_x = list_of_pairs_fragments[x]
         for i in range(0, len(pockets_numbered_list)):
             if pockets_numbered_list[i] == str(count[x]):
                 for k in range(0,len(pairs_all)):
                     if (pairs_all[k][0] == i) or (pairs_all[k][1] == i):
-                        print(pairs_all[k])
+                       #print(pairs_all[k])
                         pair_x.append(pairs_all[k])
-    print(list_of_pairs_fragments, '325')
+   #print(list_of_pairs_fragments, '325')
     pockets = []
     for i in range(0,len(list_of_pairs_fragments)):
         pockets.append([])
@@ -335,16 +326,16 @@ def separate_pockets(pockets_all, pairs_all):
             if is_common == True:
                 pockets[i].append(str(k+1))
                 pockets[i].append(str(i+1))
-                print(i+1,'with', k+1)
-                print('true up')
+               #print(i+1,'with', k+1)
+               #print('true up')
         #quit()
         #print(common_data(list_of_pairs_fragments[i], list_of_pairs_fragments[i+1]))
         
         
-    print(pockets)
+   #print(pockets)
     pockets = [x for x in pockets if x != []]
     
-    print(pockets)
+   #print(pockets)
     
     for i in range(0, len(pockets)):
         
@@ -355,7 +346,7 @@ def separate_pockets(pockets_all, pairs_all):
                 
         #del pockets[to_delete]
         
-    print(uniq_pairs(pockets),'uniq_pockets')
+   #print(uniq_pairs(pockets),'uniq_pockets')
     pockets_uniq = uniq_pairs(pockets)
     pockets_sorted = []
     alphabet = {'1':'1','2':'2','3':'3','4':'4','5':'5','6':'6','7':'7','8':'8','9':'9','10':'0','11':'A','12':'B','13':'C',\
@@ -384,9 +375,33 @@ def separate_pockets(pockets_all, pairs_all):
         final_list_pockets_string.append(string)
         
         #print(db)
-        print(pockets_numbered)    
+
+        #print(final_list_pockets_string)
+        #print(pockets_numbered)
+    
+    joined_pockets = list("_"*len(string_pockets_all)) 
+    for i in range(0,len(final_list_pockets_string)):
+        for k in range(0, len(final_list_pockets_string[i])):
+            if final_list_pockets_string[i][k] != "_":
+                joined_pockets[k] = "z"
+    print("".join(joined_pockets),'joined_pockets')
+    joined_pockets_string = "".join(joined_pockets)
+    
+    lonely_pocket = list("_"*len(pockets_all))
+    for i in range(0, len(pockets_all)):
+        if (pockets_all[i] == "P") and (joined_pockets[i] != "z"):
+            lonely_pocket[i] = "z"
+        else:
+            lonely_pocket[i] = "_"
+    print("".join(pockets_all), 'all')
+    print("".join(lonely_pocket), "lonely pocket")
+        
+    print(string_pockets_all)
     print("\n")
-    print(final_list_pockets_string)    
+    if "z" in ("".join(lonely_pocket)):
+        final_list_pockets_string.append("".join(lonely_pocket))
+    #print(final_list_pockets_string)
+    #quit()
     return(final_list_pockets_string)
 
 
@@ -414,7 +429,7 @@ def main_function():
         raise FileNotFoundError("Please provide input file with '--input' "
                                 "argument. Use -h for more help.")
     all_pockets = get_fragments(args.input)
-    print(all_pockets)
+   #print(all_pockets)
 
 #    quit()
     for pkey, item_list in all_pockets.items():
@@ -439,10 +454,10 @@ def main_function():
 #        print(pairs_all,'\n')
         pairs_P = pairs_for_long_P(pocket_P, pairs_all)
         all_pockets[pkey].append(pairs_P)
-    print(all_pockets)    
+   #print(all_pockets)    
     
     for pkey, item_list in all_pockets.items():
-        print(pkey)
+       #print(pkey)
         long_P = list(item_list[4])
         all_P = list(item_list[2])
         pairs_long_P = item_list[5]
@@ -455,21 +470,21 @@ def main_function():
         pairs_elongated_P = pairs_for_long_P(elongated_short_P, pairs_all)
         all_pockets[pkey].append(pairs_elongated_P)
         
-    print(all_pockets)
+   #print(all_pockets)
     for pkey, item_list in all_pockets.items():
         pocket_P = list(item_list[6])
         pairs_P = item_list[7]
         Pp = add_small_p(pocket_P, pairs_P)
         all_pockets[pkey].append(Pp)
     
-    print(all_pockets)
+   #print(all_pockets)
     for pkey, item_list in all_pockets.items():
         pockets_all= list(item_list[8])
         pairs_all = item_list[3]
         pockets_separated = separate_pockets(pockets_all, pairs_all)
         all_pockets[pkey].append(pockets_separated)
     
-    print(all_pockets)
+   #print(all_pockets)
     
     
     
@@ -502,10 +517,6 @@ item_list[5] - list of pairs for residues fro P streches longer-equal than 6 (or
 item_list[6] - P annotation with added small p which are the base pair partners for capital P
 item_list[7] - list of pairs for P and p annotated (from item_list[6])
 item_list[8] - strecht of P extended by the residues initially in the strech (from item_list[2])
-item_list[9] - list of separated pockets
-
-
-
-
+item_list[9] - final list of separated pockets
 
 '''
