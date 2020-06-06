@@ -172,7 +172,7 @@ def remove_short_P(string):
     
     string = "x"+string+"x"
     string = string.replace("P_","Px_").replace("_P","_xP")
-    string = string.replace("xPx","_").replace("xPPx","__").replace("xPPPx","___").replace("xPPPPx","____").replace("xPPPPPx","_____") # now 5P will be included
+    string = string.replace("xPx","_").replace("xPPx","__").replace("xPPPx","___").replace("xPPPPx","____").replace("xPPPPPx","_____") # now 6P will be included
     string = string.replace("x","")
     return string
 
