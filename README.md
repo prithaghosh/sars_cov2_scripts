@@ -17,7 +17,7 @@ segment_2/model2.pdb
 The second file is the information about pockets. This file is a multi-line fasta-like file where each segment to be analyszed has its own header followed by the secondary structure and two lines describing all the pockets. Any line following this will be ignored and not processed until next segment is reached. The residues marked with any character other than _ in the second line describing the pocket is used to compute the distances.
 Example file: 
 ```
->segment_1
+>segment_1 Scheme
 (((((.......))))).....(((....)))....
 PPPPP_______ppppp_______P____p______
 PPPPPP______ppppp___________________
