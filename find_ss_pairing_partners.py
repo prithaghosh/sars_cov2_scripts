@@ -5,10 +5,10 @@ Date: 1 June 2020
 Script to annotate pairing partner in secondary structures to binding pockets
 
 Usage:
-python3 find_pairing_partners.py --input input_file
+python3 find_ss_pairing_partners.py --input input_file
 
 For more help use:
-python3 find_pairing_partners.py -h
+python3 find_ss_pairing_partners.py -h
 """
 
 import argparse
