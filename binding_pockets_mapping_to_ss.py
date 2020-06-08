@@ -11,15 +11,15 @@ For more help use:
 python3 binding_pockets_mapping_to_ss.py -h
 """
 
-mport argparse
+import argparse
 
 des = "Script to map predicted pockets onto the secondary structure of fragments"
-ss_help_text =  "Secondary structure file format:\n>motif_4-12\nAUGAAACAU\n(((...)))""
-pockets_help_text = "Input file format:\n>>motif_4-12\nAUGAAACAU\n(((...)))"
-output_help_text = "Expected output file:\n>SARS-CoV-2\nUAGAUGAAACAUGAU\n>Incarnato_fragments_seq\n___AUGAAACAU___\n>Incarnato_fragments_ss\n___(((...)))___"
+ss_help_text =  "Secondary structure file format:\n>fragment name\n(((...)))"
+pockets_help_text = "Pockets file format:\n>fragment name\n1,3,4,5,6,7"
+output_help_text = "Expected output file:\n>fragment name\n(((...)))\nP_PPPPP__"
 
 parser = argparse.ArgumentParser(
-    description=f"{des}\n\n{genome_help_text}\n\n{input_help_text}\n\n{output_help_text}",
+    description=f"{des}\n\n{ss_help_text}\n\n{pockets_help_text}\n\n{output_help_text}",
     formatter_class=argparse.RawTextHelpFormatter)
 
 parser.add_argument("-s",
@@ -35,6 +35,12 @@ parser.add_argument("-o",
 args = parser.parse_args()
 
 def pocket_pos(binding_pockets):
+    """
+    Parses the input file and returns its content in the
+    form of a dictionary where key is the fragment name
+    and value is the list of pocket positions
+    :param binding_pockets: Name of pockets file
+    """
     pocket_dict = {}
 
     with open(binding_pockets) as f:
@@ -45,6 +51,12 @@ def pocket_pos(binding_pockets):
     return pocket_dict
 
 def pocket_mapping(consensus_ss):
+    """
+    Parses the input file and returns its content in the
+    form of a dictionary where key is the fragment name
+    and value is the secondary strucuture
+    :param consensus_ss: Name of secondary structure file
+    """
     ss_dict = {}
 
     with open(consensus_ss) as f:
@@ -61,6 +73,12 @@ def pocket_mapping(consensus_ss):
     return ss_dict
 
 def make_pockets(positions, length):
+    """
+    Parses the input file and returns its content in the
+    form of a string with pocket positions represented by P
+    :param positions: List of pocket positions
+    :param length: Length of fragment
+    """
     pockets = ""
     for p in positions:
         gaps = p - len(pockets) - 1
@@ -74,13 +92,17 @@ def make_pockets(positions, length):
 binding_pocket_sites = pocket_pos(args.pockets)
 mapped_pockets = pocket_mapping(args.ss)
 
-with open(args.output, "w") as f:
-    try:
-        for segment_name, pocket_locations in binding_pocket_sites.items():
-            fragment = mapped_pockets[segment_name]
-            pocket_str = make_pockets(pocket_locations, len(fragment))
-            print(f">{segment_name}", file=f)
-            print(fragment, file=f)
-            print(pocket_str, file=f)
-    except KeyError:
-        print(f"Key '{segment_name}' not found in both files, skipping")
+def main_function():
+    with open(args.output, "w") as f:
+        try:
+            for segment_name, pocket_locations in binding_pocket_sites.items():
+                fragment = mapped_pockets[segment_name]
+                pocket_str = make_pockets(pocket_locations, len(fragment))
+                print(f">{segment_name}", file=f)
+                print(fragment, file=f)
+                print(pocket_str, file=f)
+        except KeyError:
+            print(f"Key '{segment_name}' not found in both files, skipping")
+
+if __name__ == "__main__":
+  main_function()
