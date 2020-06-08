@@ -5,7 +5,9 @@ import pandas as pd
 import argparse
 from argparse import RawTextHelpFormatter
 import os
-
+from itertools import groupby
+from operator import itemgetter
+import more_itertools as mit
 
 
 def argument_parser():
@@ -73,18 +75,18 @@ def merge_pockets(pockets_num):
     
     pocket_merged = list("_"* len(pockets_num[0]))
     for i in range(0, len(pockets_num)):
-        print(pockets_num[i])
+        #print(pockets_num[i])
         pocket_num_list = list(pockets_num[i])
-        print(pocket_num_list)
+        #print(pocket_num_list)
         for k in range(0, len(pocket_num_list)):
             if pocket_num_list[k] != "_":
                 pocket_merged[k] = pocket_num_list[k]
-    print("".join(pocket_merged))
+    #print("".join(pocket_merged))
     return("".join(pocket_merged))
             
 def get_varna_merged(name, seq, ss, pockets_num, fscore):
-    print("varna merged")
-
+    #print("varna merged")
+    print("\n"+name)
     '''
     cmd = 'java -cp ' + config_paths.VaRNA_path + ' fr.orsay.lri.varna.applications.VARNAcmd -sequenceDBN ' + seq + \
         " -structureDBN '" + fold_ss + "' -o " + result_varna_method + "_radiate.png  \
@@ -104,6 +106,7 @@ def get_varna_merged(name, seq, ss, pockets_num, fscore):
         #print(number)
         seq_color[i]= number.rstrip(",")
     #print(seq_color)
+#    print(seq_color)
     
     string_for_color = ''
     '''
@@ -122,7 +125,7 @@ def get_varna_merged(name, seq, ss, pockets_num, fscore):
     col5 = " -basesStyle5 outline=#9900FF -applyBasesStyle5on " + str(seq_color[4])
     col6 = " -basesStyle6 outline=#FFFF00 -applyBasesStyle6on " + str(seq_color[5])
 
-    print(len(pockets_num))
+    #print(len(pockets_num))
     if  '1' not in pockets_num[0]:
         string_for_color = ''
     elif (len(pockets_num) == 1) and '1' in pockets_num[0]:
@@ -140,19 +143,97 @@ def get_varna_merged(name, seq, ss, pockets_num, fscore):
     else:
         string_for_color = ''
     #print(string_for_color)
-    print(pockets_num[0], 'pocket_num [0]')
+#    print(pockets_num[0], 'pocket_num [0]')
+    fscore_list = fscore.split(";")
+    fscore_list = [float(i) for i in fscore_list]
+#    print(fscore_list)
+    max_color= str(max(fscore_list))
+    max_color = '100'
+    string_for_color = ''
     
+#    print(seq_color)
+
+    back_color = []
+#    print(pockets_num)
+#    print(len(pockets_num))
+    for i in range(0, len(pockets_num)):
+
+        pocket = list(pockets_num[i])
+        #print(pocket)
+        number = []
+        for k in range(0, len(pocket)):
+            min=''
+            if pocket[k] != "_":
+                number.append(k+1)
+                #number = number+str(k)+"-"+str(k)+":fill=#FF0000;"
+                #number += str(k+1)+","
+        #print(number)
+        if number!=[]:
+            ranges = list(find_ranges(number))
+            back_color.append(ranges)
+        #else:
+        #    ranges = []
+        #back_color.append(ranges)#.rstrip(";")
+        
+    #print(back_color, 'back_color', len(back_color))
+    
+    
+#    ranges = [list(group) for group in mit.consecutive_groups(back_color[0])]
+#    print(list(find_ranges(back_color[0])))
+#    quit()
+
+    back1 = 'fill=#FF0000'
+    back2 = 'fill=#228B22'
+    back3 = 'fill=#0000FF'
+    back4 = 'fill=#FF9900'
+    back5 = 'fill=#9900FF'
+    back6 = 'fill=#FFFF00'
+
+    back = ['fill=#FF0000','fill=#228B22','fill=#0000FF','fill=#FF9900','fill=#9900FF','fill=#FFFF00']
+    # red, green, blue, orange, pruple, yellow
+    back = ['fill=#F4CCCC','fill=#93C47D','fill=#9FC5E8','fill=#F9CB9C','fill=#B4A7D6','fill=#FFD966']
+    back = ['fill=#','fill=#','fill=#','fill=#','fill=#','fill=#']
+    back = ['fill=#E06666','fill=#00FF00','fill=#00FFFF','fill=#FF9900','fill=#9900FF','fill=#FFFF00']
+    string_background = ""
+    
+    for i in range(0,len(back_color)):
+        for k in range(len(back_color[i])):
+            beg = str(back_color[i][k][0])
+            end = str(back_color[i][k][1])
+            string_background = string_background + beg+"-"+end+":"+back[i]+",outline=#FFFFFF;"
+    #print(string_background.rstrip(";"))
+#    quit()
+
+
+
+    colormap_style = '0:#fff2cc;25.0:#ff9900;50.0:#ff0000;100.0:#980000'
     cmd = 'java -cp ' + VaRNA_path + ' fr.orsay.lri.varna.applications.VARNAcmd ' + " -sequenceDBN '" + seq + "'"+\
-        " -structureDBN '" + ss + "' -o " + name + "_linear.png -resolution 10.0" + string_for_color + " -title '" + name + "' -titleSize 6"+\
-        " -colorMapMin '0.0' -colorMapMax '100.0' -colorMap '" + fscore + "' -colorMapStyle 'heat' -highlightRegion '10-16:fill=#FF0000'" # ,radius=15'"    #'0:#000000;50:#228B22;100:#FFFFFF' -colorMap '" + fscore + "'"
-    print(cmd)
-    print(fscore)
+        " -baseNum '#FFFFFF' -baseName '#000000' -structureDBN '" + ss + "' -o " + name + "_linear.png -resolution 10.0" + string_for_color + " -title '" + name + "' -titleSize 6 "+\
+        " -colorMapMin '0.0' -colorMapMax '"+max_color+"' -colorMap '" + fscore + "' -colorMapStyle '"+colormap_style+"' -highlightRegion '"+string_background.rstrip(";")+"'" #10-10:fill=#FF0000;12-13:fill=#FF0000'" # ,radius=15'"    #'0:#000000;50:#228B22;100:#FFFFFF' -colorMap '" + fscore + "'"
+
+    cmd2 = 'java -cp ' + VaRNA_path + ' fr.orsay.lri.varna.applications.VARNAcmd ' + " -sequenceDBN '" + seq + "'"+\
+        " -baseNum #FFFFFF -baseName '#000000' -structureDBN '" + ss + "' -title '" + name + "' -titleSize 6 -resolution 10.0"+\
+        " -colorMapMin '0.0' -colorMapMax '"+max_color+"' -colorMap '" + fscore + "' -colorMapStyle '"+colormap_style+"' -highlightRegion '"+string_background.rstrip(";")+"'"
+    print(cmd2)
+    #quit()
+#    print(fscore)
     os.system(cmd)
     #quit()
 #    quit()
 #    cmd +=  " -algorithm naview"
 #    cmd = cmd.replace("_linear.png", "_naview.png") 
 #    os.system(cmd)
+
+
+def find_ranges(iterable):
+    """Yield range of consecutive numbers."""
+    for group in mit.consecutive_groups(iterable):
+        group = list(group)
+        if len(group) == 1:
+            yield [group[0], group[0]]
+        else:
+            yield [group[0], group[-1]]
+    return group
 
 def read_scores(input):
     
@@ -178,13 +259,13 @@ def add_score(score_list, pkey):
     
 def iterate_fragments(fragments, score_list):
     
-    print("iterate_fragments")
+    #print("iterate_fragments")
 
     for pkey, item_list in fragments.items():
         pockets_P = item_list[3]
         pockets_num = P_to_numbers(pockets_P)
         fragments[pkey].append(pockets_num)
-    print(fragments)
+    #print(fragments)
     
     for pkey, item_list in fragments.items():
         pockets_num = item_list[4]
@@ -193,12 +274,12 @@ def iterate_fragments(fragments, score_list):
         else:
             merged_pockets = "".join(pockets_num)
         fragments[pkey].append(merged_pockets)
-    print(fragments)
+    #print(fragments)
     
     for pkey, item_list in fragments.items():
         score_to_add = add_score(score_list, pkey)
         fragments[pkey].append(score_to_add)
-    print(fragments)
+    #print(fragments)
     #quit()
     for pkey, item_list in fragments.items():
         name = item_list[0]
