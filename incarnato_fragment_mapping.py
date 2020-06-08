@@ -15,7 +15,7 @@ import argparse
 
 des = "Script to map Incarnato fragments onto the SARS-CoV2 genome"
 genome_help_text = "Genome file format:\nUAGAUGAAACAUGAU"
-input_help_text = "Input file format:\n>>motif_4-12\nAUGAAACAU\n(((...)))"
+input_help_text = "Input file format:\n>motif_4-12\nAUGAAACAU\n(((...)))"
 output_help_text = "Expected output file:\n>SARS-CoV-2\nUAGAUGAAACAUGAU\n>Incarnato_fragments_seq\n___AUGAAACAU___\n>Incarnato_fragments_ss\n___(((...)))___"
 
 parser = argparse.ArgumentParser(
