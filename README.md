@@ -1,3 +1,10 @@
+# Compiling the C++ codes
+
+All the C++ codes can be compiled by using the following command:
+```bash
+make
+```
+
 # pocket_3d_distance.cpp
 The prrogram requires two input files as positional arguments and output filename as third positional argument. The first file is a list of PDBs from which the pockets are being extracted. The filenames can be absolute or relative paths.
 Example file: 
@@ -41,7 +48,7 @@ _________________________________PPPPPPPPP_____	920
 ```
 
 # pocket_extraction_sequence.cpp
-The prrogram requires two input files as positional arguments.
+The program requires two input files as positional arguments.
 The first file is a list of PDBs from which the pockets are being 
 extracted. The filenames can be absolute or relative paths.
 Example file: 
