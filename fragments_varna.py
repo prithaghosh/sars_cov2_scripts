@@ -14,12 +14,15 @@ def argument_parser():
                         prog='fragments_varna.py', formatter_class=RawTextHelpFormatter)
     parser.add_argument("-i", "--input", dest="input",   
                         help="Input file.")
+    parser.add_argument("-s", "--scores", dest="scores",   
+                        help="Input file.")
 
     args = parser.parse_args()
 
     input = args.input
+    scores = args.scores
 
-    return input
+    return input, scores
 
 
 
@@ -79,7 +82,7 @@ def merge_pockets(pockets_num):
     print("".join(pocket_merged))
     return("".join(pocket_merged))
             
-def get_varna_merged(name, seq, ss, pockets_num):
+def get_varna_merged(name, seq, ss, pockets_num, fscore):
     print("varna merged")
 
     '''
@@ -103,14 +106,22 @@ def get_varna_merged(name, seq, ss, pockets_num):
     #print(seq_color)
     
     string_for_color = ''
-    
-    col1 = " -basesStyle1 fill=#FF0000,label=#FFFFFF -applyBasesStyle1on " + str(seq_color[0])
+    '''
+    col1 = " -basesStyle1 outline=#FF0000,label=#FFFFFF -applyBasesStyle1on " + str(seq_color[0])
     col2 = " -basesStyle2 fill=#228B22,label=#FFFFFF -applyBasesStyle2on " + str(seq_color[1])
     col3 = " -basesStyle3 fill=#0000FF,label=#FFFFFF -applyBasesStyle3on " + str(seq_color[2])
     col4 = " -basesStyle4 fill=#FF9900,label=#FFFFFF -applyBasesStyle4on " + str(seq_color[3])
     col5 = " -basesStyle5 fill=#9900FF,label=#FFFFFF -applyBasesStyle5on " + str(seq_color[4])
     col6 = " -basesStyle6 fill=#FFFF00,label=#FFFFFF -applyBasesStyle6on " + str(seq_color[5])
+    '''
     
+    col1 = " -basesStyle1 outline=#FF0000 -applyBasesStyle1on " + str(seq_color[0])
+    col2 = " -basesStyle2 outline=#228B22 -applyBasesStyle2on " + str(seq_color[1])
+    col3 = " -basesStyle3 outline=#0000FF -applyBasesStyle3on " + str(seq_color[2])
+    col4 = " -basesStyle4 outline=#FF9900 -applyBasesStyle4on " + str(seq_color[3])
+    col5 = " -basesStyle5 outline=#9900FF -applyBasesStyle5on " + str(seq_color[4])
+    col6 = " -basesStyle6 outline=#FFFF00 -applyBasesStyle6on " + str(seq_color[5])
+
     print(len(pockets_num))
     if  '1' not in pockets_num[0]:
         string_for_color = ''
@@ -130,23 +141,42 @@ def get_varna_merged(name, seq, ss, pockets_num):
         string_for_color = ''
     #print(string_for_color)
     print(pockets_num[0], 'pocket_num [0]')
-    #if any(c not in '123456' for c in pockets_num[0]):  # Don't use str as a name.
-     
-     #   cmd = 'java -cp ' + VaRNA_path + ' fr.orsay.lri.varna.applications.VARNAcmd ' + \
-      #  " -structureDBN '" + ss + "' -o " + name + "_linear.png -resolution 10.0"
-#    os.system(cmd)
-        #print(len(pockets_num), 'len pock num')
     
     cmd = 'java -cp ' + VaRNA_path + ' fr.orsay.lri.varna.applications.VARNAcmd ' + " -sequenceDBN '" + seq + "'"+\
-        " -structureDBN '" + ss + "' -o " + name + "_linear.png -resolution 10.0" + string_for_color + " -title '" + name + "' -titleSize 6"# -annotations 'P1:anchor=60'"  
-
+        " -structureDBN '" + ss + "' -o " + name + "_linear.png -resolution 10.0" + string_for_color + " -title '" + name + "' -titleSize 6"+\
+        " -colorMapMin '0.0' -colorMapMax '100.0' -colorMap '" + fscore + "' -colorMapStyle 'heat' -highlightRegion '10-16:fill=#FF0000'" # ,radius=15'"    #'0:#000000;50:#228B22;100:#FFFFFF' -colorMap '" + fscore + "'"
+    print(cmd)
+    print(fscore)
     os.system(cmd)
+    #quit()
 #    quit()
-    cmd +=  " -algorithm naview"
-    cmd = cmd.replace("_linear.png", "_naview.png") 
-    os.system(cmd)
+#    cmd +=  " -algorithm naview"
+#    cmd = cmd.replace("_linear.png", "_naview.png") 
+#    os.system(cmd)
+
+def read_scores(input):
     
-def iterate_fragments(fragments):
+    score_list = []
+    with open(input) as file:
+        for line in file:
+            if line[0] == ">":
+                name = line.strip()
+                score = next(file).replace(",",";").strip()
+                score_list.append([name,score])
+    
+    #print(score_list)
+    return score_list
+
+
+def add_score(score_list, pkey):
+    
+    for i in range(0, len(score_list)):
+        if pkey == score_list[i][0]:
+            score = score_list[i][1]
+    return score
+    
+    
+def iterate_fragments(fragments, score_list):
     
     print("iterate_fragments")
 
@@ -166,18 +196,25 @@ def iterate_fragments(fragments):
     print(fragments)
     
     for pkey, item_list in fragments.items():
+        score_to_add = add_score(score_list, pkey)
+        fragments[pkey].append(score_to_add)
+    print(fragments)
+    #quit()
+    for pkey, item_list in fragments.items():
         name = item_list[0]
         seq = item_list[1]
         ss = item_list[2]
         pockets = item_list[4]
-        get_varna_merged(name,seq, ss, pockets)
+        score = item_list[6]
+        get_varna_merged(name,seq, ss, pockets, score)
 
 def main_function():
 
-    input_file = argument_parser()
+    input_file, input_scores = argument_parser()
     #print(input_file)
     fragments = read_file(input_file)
-    iterate_fragments(fragments)
+    score_list = read_scores(input_scores)
+    iterate_fragments(fragments, score_list)
     
     print("done")
 
