@@ -1,5 +1,5 @@
 /*
- * pocket_extraction.cpp
+ * pocket_3d_distance.cpp
  * 
  * Copyright 2020 Nithin C
  * Laboratory of Bioinformatics and Protein Engineering
@@ -62,11 +62,30 @@ int main(int argc, char **argv)
 * Example file: 
 * >segment_1
 * (((((.......))))).....(((....)))....
-* PPPPP.......ppppp.......P....p......
-* PPPPPP......ppppp...................
-* 111111......22222...................
+* PPPPP_______ppppp_______P____p______
+* PPPPPP______ppppp___________________
+* 111111______22222___________________
+* >segment_2
+* ....((((....))))..........(((((...........)))))
+* ___PPPPP____pppp__________________PPPPPPP______
+* __PPPPPPP___pppp_________________PPPPPPPPP_____
+* __1111111___2222_______________________________
+* _________________________________zzzzzzzzz_____
 * The header string must be a substring of the PDB filename or path.
-* 
+* The output file conatins the unique pockets based on distance and their counts.
+* Example file:
+* >segment_1
+* (((((.......))))).....(((....)))....
+* PPPPP_______ppppp_______P____p______
+* PPPPPP______ppppp___________________
+* PPPPPP______ppppp___________________    1000
+* >segment_2
+* ....((((....))))..........(((((...........)))))
+* ___PPPPP____pppp__________________PPPPPPP______
+* __PPPPPPP___pppp_________________PPPPPPPPP_____
+* __PPPPPPP___PPPP_________________PPPPPPPPP_____	80
+* __PPPPPPP___PPPP_______________________________	920
+* _________________________________PPPPPPPPP_____	920
 */
     if(argc!=4)
 	{

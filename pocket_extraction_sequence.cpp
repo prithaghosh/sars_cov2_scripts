@@ -39,7 +39,7 @@ using namespace std;
 int main(int argc, char **argv)
 {
 /*
-* The prrogram requires two input files as positional arguments.
+* The program requires two input files as positional arguments.
 * The first file is a list of PDBs from which the pockets are being 
 * extracted. The filenames can be absolute or relative paths.
 * Example file: 
@@ -55,9 +55,15 @@ int main(int argc, char **argv)
 * Example file: 
 * >segment_1
 * (((((.......))))).....(((....)))....
-* PPPPP.......ppppp.......P....p......
-* PPPPPP......ppppp...................
-* PPPPPP......PPPPP...................
+* PPPPP_______ppppp_______P____p______
+* PPPPPP______ppppp___________________
+* PPPPPP______PPPPP___________________
+* >segment_2
+* ....((((....))))..........(((((...........)))))
+* ___PPPPP____pppp__________________PPPPPPP______
+* __PPPPPPP___pppp_________________PPPPPPPPP_____
+* __PPPPPPP___PPPP_______________________________
+* _________________________________PPPPPPPPP_____
 * The header string must be a substring of the PDB filename or path.
 * 
 */
