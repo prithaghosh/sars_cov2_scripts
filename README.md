@@ -97,33 +97,51 @@ The header string must be a substring of the PDB filename or path.
 ### incarnato_fragment_mapping.py
 Script to map Incarnato fragments onto the SARS-CoV2 genome
 Usage:
-```python3 incarnato_fragment_mapping.py --genome genome_file --input input_file```
+```
+python3 incarnato_fragment_mapping.py --genome genome_file --input input_file
+```
 For more help use:
-```python3 incarnato_fragment_mapping.py -h```
+```
+python3 incarnato_fragment_mapping.py -h
+```
 
 ### bujnicki_segment_mapping.py
 Script to map Bujnicki segments onto the SARS-CoV2 genome
 Usage:
-```python3 bujnicki_segment_mapping.py --genome genome_file --input input_file```
+```
+python3 bujnicki_segment_mapping.py --genome genome_file --input input_file
+```
 For more help use:
-```python3 bujnicki_segment_mapping.py -h```
+```
+python3 bujnicki_segment_mapping.py -h
+```
 
 ### binding_pockets_mapping_to_ss.py
 Script to map predicted pockets onto the secondary structure of segments
 Usage:
-```python3 binding_pockets_mapping_to_ss.py --ss secondary_structure_file --pockets pockets_file```
+```
+python3 binding_pockets_mapping_to_ss.py --ss secondary_structure_file --pockets pockets_file
+```
 For more help use:
-```python3 binding_pockets_mapping_to_ss.py -h```
+```
+python3 binding_pockets_mapping_to_ss.py -h
+```
 
 ### find_ss_pairing_partners.py
 Script to annotate pairing partner in secondary structures to binding pockets
 Usage:
-```python3 find_ss_pairing_partners.py --input input_file```
+```
+python3 find_ss_pairing_partners.py --input input_file
+```
 For more help use:
-```python3 find_ss_pairing_partners.py -h```
+```
+python3 find_ss_pairing_partners.py -h
+```
 
 ## Shell scripts
 Script to extract secondary structures from 3D models using ClaRNA
 Usage:
-```clarna.sh```
-ClaRNA can be installed from the following [link](/https://rna-tools.readthedocs.io/en/latest/tools.html?highlight=clarna#clarna-contacts-classification)
+```
+clarna.sh
+```
+ClaRNA can be installed from the following [link](https://rna-tools.readthedocs.io/en/latest/tools.html?highlight=clarna#clarna-contacts-classification)
