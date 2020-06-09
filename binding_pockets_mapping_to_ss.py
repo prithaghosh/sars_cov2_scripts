@@ -2,8 +2,7 @@
 Author: Pritha Ghosh, Bujnicki Lab, IIMCB in Warsaw
 Date: 30 May 2020
 
-Script to map predicted pockets onto the secondary structure of fragments
-
+Script to map predicted pockets onto the secondary structure of segments
 Usage:
 python3 binding_pockets_mapping_to_ss.py --ss secondary_structure_file --pockets pockets_file 
 
@@ -13,7 +12,7 @@ python3 binding_pockets_mapping_to_ss.py -h
 
 import argparse
 
-des = "Script to map predicted pockets onto the secondary structure of fragments"
+des = "Script to map predicted pockets onto the secondary structure of segments"
 ss_help_text =  "Secondary structure file format:\n>fragment name\n(((...)))"
 pockets_help_text = "Pockets file format:\n>fragment name\n1,3,4,5,6,7"
 output_help_text = "Expected output file:\n>fragment name\n(((...)))\nP_PPPPP__"
