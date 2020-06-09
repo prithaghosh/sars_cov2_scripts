@@ -27,6 +27,7 @@ for segment in `cat list_of_segments`; do
     grep -v "consensus_pairs_unique_single_line" $model".consensus_ss_0.1_unique1line" | cut -f2 -d ':' >>$segment"_1000_LE_PDBs_consensus_ss_0.1_unique1line"
   done
 
+  # find_SS_consensus: Boniecki MJ and Bujnicki JM, unpublished
   find_SS_consensus $segment"_1000_LE_PDBs_consensus_ss_0.1_unique1line" 0.1 >$segment"_1000_LE_PDBs_consensus_ss_0.1_unique1line.consensus_ss_0.1"
   find_SS_consensus $segment"_1000_LE_PDBs_consensus_ss_0.1_unique1line" 0.25 >$segment"_1000_LE_PDBs_consensus_ss_0.1_unique1line.consensus_ss_0.25"
   find_SS_consensus $segment"_1000_LE_PDBs_consensus_ss_0.1_unique1line" 0.5 >$segment"_1000_LE_PDBs_consensus_ss_0.1_unique1line.consensus_ss_0.5"
