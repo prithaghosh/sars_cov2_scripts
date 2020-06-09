@@ -5,7 +5,7 @@ Date: 14 May 2020
 Script to generate input files for the ShapeKnots program
 
 Usage:
-python3 shapeknots_inputs.py --genome genome_file --input input_file 
+python3 shapeknots_inputs.py --react reactivity_file --input input_file 
 
 For more help use:
 python3 shapeknots_inputs.py -h

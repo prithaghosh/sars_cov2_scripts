@@ -116,6 +116,17 @@ For more help use:
 python3 bujnicki_segment_mapping.py -h
 ```
 
+### shapeknots_inputs.py
+Script to generate input files for the ShapeKnots program
+Usage:
+```
+python3 shapeknots_inputs.py --react reactivity_file --input input_file 
+```
+For more help use:
+```
+python3 shapeknots_inputs.py -h
+```
+
 ### binding_pockets_mapping_to_ss.py
 Script to map predicted pockets onto the secondary structure of segments
 Usage:
