@@ -1,6 +1,21 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
+"""
+Author:Tomasz Wirecki, Bujnicki Lab, IIMCB in Warsaw
+Date: June 2020
+
+Script for calculating global median for the set of reactivities, and computing mean of 75nt sliding window
+
+Usage:
+reactivity_sliding_window.py -f input_file
+
+For more help use:
+reactivity_sliding_window.py -h
+"""
+
+
+
 
 import argparse
 from argparse import RawTextHelpFormatter
@@ -10,7 +25,7 @@ import numpy as np
 
 def argument_parser():
 
-    parser = argparse.ArgumentParser(description=__doc__, prog='map_ss_to_ali', formatter_class=RawTextHelpFormatter)
+    parser = argparse.ArgumentParser(description=__doc__, prog='map_reactivity', formatter_class=RawTextHelpFormatter)
     parser.add_argument("-f", "--file", required=True, dest="file",
                             help="Input alignment file. Multiple sequence alignment in one-line FASTA format.")
 

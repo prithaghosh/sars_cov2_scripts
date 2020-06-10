@@ -1,6 +1,19 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
+"""
+Author:Tomasz Wirecki, Bujnicki Lab, IIMCB in Warsaw
+Date: June 2020
+
+Script for normalizing the SHAPE reactivities
+
+Usage:
+normalize_reactivities.py -f input_file
+
+For more help use:
+normalize_reactivities.py -h
+"""
+
 
 import argparse
 from argparse import RawTextHelpFormatter
@@ -10,9 +23,9 @@ import os
 
 def argument_parser():
 
-    parser = argparse.ArgumentParser(description=__doc__, prog='map_ss_to_ali', formatter_class=RawTextHelpFormatter)
+    parser = argparse.ArgumentParser(description=__doc__, prog='normalize_reactivities', formatter_class=RawTextHelpFormatter)
     parser.add_argument("-f", "--file", required=True, dest="file",
-                            help="Input alignment file. Multiple sequence alignment in one-line FASTA format.")
+                            help="Input with reactivties separated by ','")
 
     args = parser.parse_args() 
 

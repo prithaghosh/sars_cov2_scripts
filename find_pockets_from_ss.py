@@ -5,13 +5,13 @@
 Author: Pritha Ghosh, Tomasz Wirecki, Bujnicki Lab, IIMCB in Warsaw
 Date: June 2020
 
-Script to annotate pairing partner in secondary structures to binding pockets
+Script for finding pockets, basing on the secondary sturcture and pockets reported by Fpocket
 
 Usage:
-find_lovers.py --input input_file
+find_pockets_from_ss.py -i input_file
 
 For more help use:
-find_lovers.py -h
+find_pockets_from_ss.py -h
 """
 
 import argparse
