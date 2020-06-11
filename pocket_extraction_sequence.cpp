@@ -132,6 +132,7 @@ int main(int argc, char **argv)
 * stringstream named data.
 */
     std::stringstream data; 
+    file.open(argv[2]);
 	if(file.is_open())
 	{
 		data << file.rdbuf();
@@ -139,7 +140,7 @@ int main(int argc, char **argv)
 	}
 	else
 	{
-		std::cout<<"Unable to open "<<argv[1]<<std::endl;
+		std::cout<<"Unable to open "<<argv[2]<<std::endl;
 		return 1;
 	}
 	size_t pocket_number =0; //initilize the number of pockets as zero.
