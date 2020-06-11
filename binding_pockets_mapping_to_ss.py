@@ -1,3 +1,4 @@
+#!/usr/bin/python3
 """
 Author: Pritha Ghosh, Bujnicki Lab, IIMCB in Warsaw
 Date: 30 May 2020

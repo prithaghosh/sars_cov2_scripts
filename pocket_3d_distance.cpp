@@ -89,8 +89,51 @@ int main(int argc, char **argv)
 */
     if(argc!=4)
 	{
-		std::cerr<<"Incorrect Useage:"<<std::endl;
+		std::cerr<<"Help Message:"<<std::endl;
 		std::cerr<<"Correct useage is: "<<argv[0]<<" List_pdbs pocket_data Output_filename"<<std::endl;
+        std::cerr<<"The prrogram requires two input files as positional arguments and                 "<<std::endl;
+        std::cerr<<"output filename as third positional argument.                                     "<<std::endl;
+        std::cerr<<"The first file is a list of PDBs from which the pockets are being                 "<<std::endl;
+        std::cerr<<"extracted. The filenames can be absolute or relative paths.                       "<<std::endl;
+        std::cerr<<"\tExample file:                                                                   "<<std::endl;
+        std::cerr<<"\tsegment_1/model1.pdb                                                            "<<std::endl;
+        std::cerr<<"\tsegment_1/model2.pdb                                                            "<<std::endl;
+        std::cerr<<"\tsegment_2/model1.pdb                                                            "<<std::endl;
+        std::cerr<<"\tsegment_2/model2.pdb                                                            "<<std::endl;
+        std::cerr<<"The second file is the information about pockets. This file is a                  "<<std::endl;
+        std::cerr<<"multi-line fasta file where each segment to be analyszed has its own              "<<std::endl;
+        std::cerr<<"header followed by the secondary structure and two lines describing               "<<std::endl;
+        std::cerr<<"all the pockets. Any line following this will be ignored and not                  "<<std::endl;
+        std::cerr<<"processed until next segment is reached. The residues marked with any             "<<std::endl;
+        std::cerr<<"character other than _ in the second line describing the pocket is                "<<std::endl;
+        std::cerr<<"used to compute the distances.                                                    "<<std::endl;
+        std::cerr<<"Example file:                                                                     "<<std::endl;
+        std::cerr<<"\t>segment_1                                                                      "<<std::endl;
+        std::cerr<<"\t(((((.......))))).....(((....)))....                                            "<<std::endl;
+        std::cerr<<"\tPPPPP_______ppppp_______P____p______                                            "<<std::endl;
+        std::cerr<<"\tPPPPPP______ppppp___________________                                            "<<std::endl;
+        std::cerr<<"\t111111______22222___________________                                            "<<std::endl;
+        std::cerr<<"\t>segment_2                                                                      "<<std::endl;
+        std::cerr<<"\t....((((....))))..........(((((...........)))))                                 "<<std::endl;
+        std::cerr<<"\t___PPPPP____pppp__________________PPPPPPP______                                 "<<std::endl;
+        std::cerr<<"\t__PPPPPPP___pppp_________________PPPPPPPPP_____                                 "<<std::endl;
+        std::cerr<<"\t__1111111___2222_______________________________                                 "<<std::endl;
+        std::cerr<<"\t_________________________________zzzzzzzzz_____                                 "<<std::endl;
+        std::cerr<<"The header string must be a substring of the PDB filename or path.                "<<std::endl;
+        std::cerr<<"The output file conatins the unique pockets based on distance and their counts.   "<<std::endl;
+        std::cerr<<"Example file:                                                                     "<<std::endl;
+        std::cerr<<"\t>segment_1                                                                      "<<std::endl;
+        std::cerr<<"\t(((((.......))))).....(((....)))....                                            "<<std::endl;
+        std::cerr<<"\tPPPPP_______ppppp_______P____p______                                            "<<std::endl;
+        std::cerr<<"\tPPPPPP______ppppp___________________                                            "<<std::endl;
+        std::cerr<<"\tPPPPPP______ppppp___________________    1000                                    "<<std::endl;
+        std::cerr<<"\t>segment_2                                                                      "<<std::endl;
+        std::cerr<<"\t....((((....))))..........(((((...........)))))                                 "<<std::endl;
+        std::cerr<<"\t___PPPPP____pppp__________________PPPPPPP______                                 "<<std::endl;
+        std::cerr<<"\t__PPPPPPP___pppp_________________PPPPPPPPP_____                                 "<<std::endl;
+        std::cerr<<"\t__PPPPPPP___PPPP_________________PPPPPPPPP_____	80                            "<<std::endl;
+        std::cerr<<"\t__PPPPPPP___PPPP_______________________________	920                           "<<std::endl;
+        std::cerr<<"\t_________________________________PPPPPPPPP_____	920                           "<<std::endl;
 		return EXIT_FAILURE;
 	}
 /*

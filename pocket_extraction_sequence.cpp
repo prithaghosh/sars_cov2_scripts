@@ -68,10 +68,37 @@ int main(int argc, char **argv)
 * 
 */
     
-    if(argc!=3)
+    if(argc!=3 or argv[1] == "-h" or argv[1] == "--help")
 	{
-		std::cout<<"Incorrect Useage:"<<std::endl;
-		std::cout<<"Correct useage is: "<<argv[0]<<" List_pdbs pocket_data"<<std::endl;
+		std::cerr<<"Help Message"<<std::endl;
+		std::cerr<<"Correct useage is: "<<argv[0]<<" List_pdbs pocket_data"<<std::endl;
+        std::cerr<<"The program requires two input files as positional arguments."<<std::endl;
+        std::cerr<<"The first file is a list of PDBs from which the pockets are being extracted."<<std::endl;
+        std::cerr<<"The filenames can be absolute or relative paths."<<std::endl;
+        std::cerr<<"Example file:"<<std::endl;
+        std::cerr<<"\tsegment_1/model1.pdb"<<std::endl;
+        std::cerr<<"\tsegment_1/model2.pdb"<<std::endl;
+        std::cerr<<"\tsegment_2/model1.pdb"<<std::endl;
+        std::cerr<<"\tsegment_2/model2.pdb"<<std::endl;
+        std::cerr<<"The second file is the information about pockets. This file is a multi-line"<<std::endl;
+        std::cerr<<"fasta file where each segment to be analyszed has its own header followed by"<<std::endl;
+        std::cerr<<"the secondary structure and two lines describing all the pockets. Each pocket"<<std::endl;
+        std::cerr<<"to be extracted is a single line with residues to be extracted marked as P."<<std::endl;
+        std::cerr<<"\tExample file:"<<std::endl;
+        std::cerr<<"\t>segment_"<<std::endl;
+        std::cerr<<"\t(((((.......))))).....(((....)))...."<<std::endl;
+        std::cerr<<"\tPPPPP_______ppppp_______P____p_____"<<std::endl;
+        std::cerr<<"\tPPPPPP______ppppp___________________"<<std::endl;                                 
+        std::cerr<<"\tPPPPPP______PPPPP___________________"<<std::endl;                     
+        std::cerr<<"\t>segment_2"<<std::endl;                     
+        std::cerr<<"\t....((((....))))..........(((((...........)))))"<<std::endl;                     
+        std::cerr<<"\t___PPPPP____pppp__________________PPPPPPP______"<<std::endl;                     
+        std::cerr<<"\t__PPPPPPP___pppp_________________PPPPPPPPP_____"<<std::endl;                     
+        std::cerr<<"\t__PPPPPPP___PPPP_______________________________"<<std::endl;                     
+        std::cerr<<"\t_________________________________PPPPPPPPP_____"<<std::endl;                     
+        std::cerr<<"The header string must be a substring of the PDB filename or path."<<std::endl;
+
+
 		return 1;
 	}
 /*
