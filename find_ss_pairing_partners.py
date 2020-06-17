@@ -1,4 +1,5 @@
-#!/usr/bin/python3
+#!/usr/bin/python3.8
+
 """
 Author: Pritha Ghosh, Bujnicki Lab, IIMCB in Warsaw
 Date: 1 June 2020
