@@ -10,7 +10,7 @@
 
 # https://rna-tools.readthedocs.io/en/latest/tools.html?highlight=clarna#clarna-contacts-classification
 for fname in `cat list_of_le_models`; do
-  python clarna_run.py -ipdb $fname.pdb >$fname.outCR
+  clarna_run.py -ipdb $fname.pdb >$fname.outCR
   ClaRNAwd_output_parser_get_SS $fname.outCR >$fname.ss
 done
 
