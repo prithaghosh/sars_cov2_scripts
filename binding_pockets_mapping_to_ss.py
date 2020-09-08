@@ -16,7 +16,7 @@ import argparse
 
 des = "Script to map predicted pockets onto the secondary structure of segments"
 ss_help_text =  "Secondary structure file format:\n>fragment name\n(((...)))"
-pockets_help_text = "Pockets file format:\n>fragment name\n1,3,4,5,6,7"
+pockets_help_text = "Pockets file format:\n>fragment name\n1,3,4,5,6,7\nP.S. Please make sure there is no comma\nat the end of the line."
 output_help_text = "Expected output file:\n>fragment name\n(((...)))\nP_PPPPP__"
 
 parser = argparse.ArgumentParser(
