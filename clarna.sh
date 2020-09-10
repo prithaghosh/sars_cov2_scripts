@@ -10,8 +10,8 @@
 
 # https://rna-tools.readthedocs.io/en/latest/tools.html?highlight=clarna#clarna-contacts-classification
 for fname in `cat list_of_le_models`; do
-  python ClaRNA_play/clarna_run.py -ipdb $fname.pdb >$fname.outCR
-  ClaRNA_play/lib/ClaRNAwd_to_vienaSS/ClaRNAwd_output_parser_get_SS $fname.outCR >$fname.ss
+  clarna_run.py -ipdb $fname.pdb >$fname.outCR
+  ClaRNAwd_output_parser_get_SS $fname.outCR >$fname.ss
 done
 
 ls -d fragment* >list_of_segments

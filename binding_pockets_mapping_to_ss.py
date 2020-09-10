@@ -1,4 +1,5 @@
-#!/usr/bin/python3
+#!/usr/bin/python3.8
+
 """
 Author: Pritha Ghosh, Bujnicki Lab, IIMCB in Warsaw
 Date: 30 May 2020
@@ -15,7 +16,7 @@ import argparse
 
 des = "Script to map predicted pockets onto the secondary structure of segments"
 ss_help_text =  "Secondary structure file format:\n>fragment name\n(((...)))"
-pockets_help_text = "Pockets file format:\n>fragment name\n1,3,4,5,6,7"
+pockets_help_text = "Pockets file format:\n>fragment name\n1,3,4,5,6,7\nP.S. Please make sure there is no comma\nat the end of the line."
 output_help_text = "Expected output file:\n>fragment name\n(((...)))\nP_PPPPP__"
 
 parser = argparse.ArgumentParser(
