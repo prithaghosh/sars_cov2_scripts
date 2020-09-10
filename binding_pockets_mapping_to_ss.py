@@ -47,7 +47,10 @@ def pocket_pos(binding_pockets):
         for line in f:
             seg_name = line.strip().strip(">")
             sites = next(f).strip()
-            pocket_dict[seg_name] = [int(x) for x in sites.split(",")]
+            try:
+                pocket_dict[seg_name] = [int(x) for x in sites.split(",")]
+            except ValueError as ve:
+                print("There are additional commas at end of the line for ", line)
     return pocket_dict
 
 def pocket_mapping(consensus_ss):
